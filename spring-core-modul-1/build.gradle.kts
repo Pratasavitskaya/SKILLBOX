@@ -2,7 +2,15 @@ plugins {
     id("java")
 
 }
+tasks.jar {
 
+    manifest {
+
+        attributes["Main-Class"] = "org.example.Main"
+
+    }
+
+}
 group = "org.example"
 version = "1.0-SNAPSHOT"
 

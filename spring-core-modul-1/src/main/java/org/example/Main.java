@@ -13,17 +13,17 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-   private static final InputStream inputStream = System.in;
-   private static final Reader inputStreamReader = new InputStreamReader(inputStream);
-   private static final BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+   private  static InputStream inputStream = System.in;
+   private static  Reader inputStreamReader = new InputStreamReader(inputStream);
+   private static  BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 
-    private static final ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
-    private  static Map<String, Contacts>  mapContacts=new HashMap<>();
+//    private   ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
+    private   static  Map<String, Contacts>  mapContacts=new HashMap<>();
 
     public static void main(String[] args) throws IOException {
-
-        mapContacts= context.getBean(ProfileWorker.class).doWork();
+        ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
+         mapContacts= context.getBean(ProfileWorker.class).doWork();
 
            showMenu();
     }
@@ -34,7 +34,6 @@ public static void showMenu() throws IOException {
     System.out.println("remove contact: 3 ");
     System.out.println("save to file:4");
     System.out.println("exit: 6 ");
-
     String num = bufferedReader.readLine();
 
     if (num.equals("1") )createContact();
@@ -42,6 +41,7 @@ public static void showMenu() throws IOException {
     if (num.equals("3") )removeContact();
     if (num.equals("4")){
         try {
+            ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
             context.getBean(WorkWithFile.class).writeToFile(mapContacts);
 
         } catch (IOException e) {
