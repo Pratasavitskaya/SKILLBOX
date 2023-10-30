@@ -17,15 +17,13 @@ public class Main {
    private static  Reader inputStreamReader = new InputStreamReader(inputStream);
    private static  BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-
-//    private   ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
     private   static  Map<String, Contacts>  mapContacts=new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         ApplicationContext context= new AnnotationConfigApplicationContext(AppConfig.class);
-         mapContacts= context.getBean(ProfileWorker.class).doWork();
+        mapContacts=context.getBean(ProfileWorker.class).doWork();
 
-           showMenu();
+        showMenu();
     }
 public static void showMenu() throws IOException {
     System.out.println("Enter number for work");
@@ -52,9 +50,9 @@ public static void showMenu() throws IOException {
 
     }
     if (num.equals("6")) {
-        bufferedReader.close();
-        inputStreamReader.close();
         inputStream.close();
+        inputStreamReader.close();
+        bufferedReader.close();
     }else
         showMenu();
 
@@ -63,18 +61,18 @@ public static void showMenu() throws IOException {
     private static void removeContact() throws IOException {
         System.out.println("enter email for remove:");
         String email= bufferedReader.readLine();
-             
-       if (mapContacts.get(email)!=null) {
-           mapContacts.remove(email);
-           System.out.println("Contact with email:"+ email+" was deleted");
-       }
-                else System.out.println("error Email ");
-
+       if (mapContacts!=null && !mapContacts.isEmpty()) {
+           if (mapContacts.get(email) != null) {
+               mapContacts.remove(email);
+               System.out.println("Contact with email:" + email + " was deleted");
+           } else System.out.println("error Email ");
+       } else
+           System.out.println("no saved contacts");
        showMenu();
     }
 
     private static void viewContacts() throws IOException {
-        if (mapContacts!=null){
+        if (mapContacts!=null && !mapContacts.isEmpty()){
 
         for(Map.Entry<String, Contacts> entry : mapContacts.entrySet()){
                  System.out.println(entry.getValue().toString());

@@ -1,1 +1,0 @@
-java -jar spring-core-modul-1.main.jar

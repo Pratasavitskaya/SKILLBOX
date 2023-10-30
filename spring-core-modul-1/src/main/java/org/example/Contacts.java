@@ -1,8 +1,6 @@
 package org.example;
 
 import org.springframework.stereotype.Component;
-
-@Component
 public class Contacts {
     private String fullName;
     private String phoneNumber;

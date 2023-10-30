@@ -25,16 +25,17 @@ public class EnvInit implements EnvPrinter{
                 BufferedReader reader = new BufferedReader(fr);
 
                 String line = reader.readLine();
-                String[] info = line.split(";");
-                contact=new Contacts(info[0],info[1],info[2]);
-                mapContacts.put(info[2],contact);
-                while (line != null) {
-                    info = line.split(";");
-                    contact=new Contacts(info[0],info[1],info[2]);
-                    mapContacts.put(info[2],contact);
-                    line = reader.readLine();
+                if (line!=null && !line.isEmpty()) {
+                    String[] info = line.split(";");
+                    contact = new Contacts(info[0], info[1], info[2]);
+                    mapContacts.put(info[2], contact);
+                    while (line != null) {
+                        info = line.split(";");
+                        contact = new Contacts(info[0], info[1], info[2]);
+                        mapContacts.put(info[2], contact);
+                        line = reader.readLine();
+                    }
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
