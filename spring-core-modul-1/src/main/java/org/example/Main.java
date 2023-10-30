@@ -27,36 +27,49 @@ public class Main {
     }
 
     public static void showMenu() throws IOException {
-        System.out.println("Enter number for work");
-        System.out.println("Create contact: 1 ");
-        System.out.println("view contacts: 2");
-        System.out.println("remove contact: 3 ");
-        System.out.println("save to file:4");
-        System.out.println("exit: 6 ");
-        String num = bufferedReader.readLine();
+        String num = "";
+        do {
 
-        if (num.equals("1")) createContact();
-        if (num.equals("2")) viewContacts();
-        if (num.equals("3")) removeContact();
-        if (num.equals("4")) {
-            try {
-                ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-                context.getBean(WorkWithFile.class).writeToFile(mapContacts);
+            System.out.println("Enter number for work");
+            System.out.println("Create contact: 1 ");
+            System.out.println("view contacts: 2");
+            System.out.println("remove contact: 3 ");
+            System.out.println("save to file:4");
+            System.out.println("exit: 5 ");
+            num = bufferedReader.readLine();
 
-            } catch (IOException e) {
-                System.out.println("error writing to file");
-
+            switch (num) {
+                case "1":
+                    createContact();
+                    break;
+                case "2":
+                    viewContacts();
+                    break;
+                case "3":
+                    removeContact();
+                    break;
+                case "4":
+                    writeToFile();
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
             }
-            showMenu();
+        } while (!num.equals("5"));
+        inputStream.close();
+        inputStreamReader.close();
+        bufferedReader.close();
+    }
+
+    private static void writeToFile() {
+        try {
+            ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+            context.getBean(WorkWithFile.class).writeToFile(mapContacts);
+
+        } catch (IOException e) {
+            System.out.println("error writing to file");
 
         }
-        if (num.equals("6")) {
-            inputStream.close();
-            inputStreamReader.close();
-            bufferedReader.close();
-        } else
-            showMenu();
-
     }
 
     private static void removeContact() throws IOException {
@@ -67,9 +80,8 @@ public class Main {
                 mapContacts.remove(email);
                 System.out.println("Contact with email:" + email + " was deleted");
             } else System.out.println("error Email ");
-        } else
-            System.out.println("no saved contacts");
-        showMenu();
+        } else System.out.println("no saved contacts");
+
     }
 
     private static void viewContacts() throws IOException {
@@ -79,7 +91,7 @@ public class Main {
                 System.out.println(entry.getValue().toString());
             }
         } else System.out.println("no contacts");
-        showMenu();
+
     }
 
     public static void createContact() throws IOException {
@@ -96,24 +108,23 @@ public class Main {
                 contact.setPhoneNumber(info[1]);
             else {
                 System.out.println("error phone number");
-                showMenu();
+
             }
 
-            if (emailValidator(info[2]) == true)
-                contact.setEmail(info[2]);
+            if (emailValidator(info[2]) == true) contact.setEmail(info[2]);
             else {
                 System.out.println("error email");
-                showMenu();
+
             }
         } else {
             System.out.println("error contact");
-            showMenu();
+
         }
         mapContacts.put(contact.getEmail(), contact);
         System.out.println("created contact:" + contact.toString());
         contact = new Contacts();
 
-        showMenu();
+
     }
 
     public static boolean emailValidator(String email) {
