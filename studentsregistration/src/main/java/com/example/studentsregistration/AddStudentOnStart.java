@@ -1,7 +1,10 @@
 package com.example.studentsregistration;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.event.ApplicationPreparedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +17,7 @@ import java.util.UUID;
 public class AddStudentOnStart {
     private final RegistrationStudents registrationStudents = new RegistrationStudents();
 
+    //@EventListener(ApplicationStartedEvent.class)
     @EventListener(ApplicationStartedEvent.class)
     public void addStudents() {
         UUID id = UUID.randomUUID();

@@ -2,6 +2,7 @@ package com.example.studentsregistration;
 
 import com.example.studentsregistration.event.EventHolder;
 import com.example.studentsregistration.event.EventRemove;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -20,26 +21,16 @@ import java.util.UUID;
 
 @ShellComponent
 @RequiredArgsConstructor
-
+@NoArgsConstructor(force = true)
 public class RegistrationStudents {
 
     private final ApplicationEventPublisher publisher;
     private Map<UUID, Student> mapStudents = new HashMap<>();
+   // @EventListener(ApplicationStartedEvent.class)
+    public void listener(Map<UUID, Student> mapOnStart) {
+        mapStudents.putAll(mapOnStart);
+        System.out.println(mapStudents);
 
-    @EventListener(ApplicationStartedEvent.class)
-    public void listener() {
-        UUID id = UUID.randomUUID();
-        mapStudents.put(id, new Student(id, "Alena", "Mil", 18));
-        id = UUID.randomUUID();
-        mapStudents.put(id, new Student(id, "Anatol", "Kras", 19));
-        id = UUID.randomUUID();
-        mapStudents.put(id, new Student(id, "Masha", "Krasotka", 18));
-        id = UUID.randomUUID();
-        mapStudents.put(id, new Student(id, "Alisa", "Lin", 19));
-        id = UUID.randomUUID();
-        mapStudents.put(id, new Student(id, "Irina", "Krut", 17));
-
-        System.out.println("students added");
     }
 
     @ShellMethod
