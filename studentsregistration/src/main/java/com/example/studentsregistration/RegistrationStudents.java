@@ -2,6 +2,7 @@ package com.example.studentsregistration;
 
 import com.example.studentsregistration.event.EventHolder;
 import com.example.studentsregistration.event.EventRemove;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.shell.Availability;
@@ -14,17 +15,19 @@ import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class RegistrationStudents {
 
     private final ApplicationEventPublisher publisher;
     public Map<UUID, Student> mapStudents = new HashMap<>();
-
+    public UUID idStudent = null;
 
     @ShellMethod
     public String add(String firstName, String lastName, int age) {
         UUID id = UUID.randomUUID();
         Student student = new Student(id, firstName, lastName, age);
         mapStudents.put(id, student);
+        assert publisher != null;
         publisher.publishEvent(new EventHolder(this, student));
         return "student was added:";
     }
@@ -32,16 +35,19 @@ public class RegistrationStudents {
     @ShellMethod
     @ShellMethodAvailability("canRemoveStudent")
     public String remove(UUID id) {
-        Student student = mapStudents.get(id);
-        publisher.publishEvent(new EventRemove(this, id));
-        mapStudents.remove(id);
 
-        return MessageFormat.format("student with id:{0} was removed ", id);
+        assert publisher != null;
+        publisher.publishEvent(new EventRemove(this, id));
+        if (mapStudents.get(id) != null) {
+            mapStudents.remove(id);
+            return ("Student with id: " + id + " was remove");
+        } else
+            return ("No student with id: " + id);
     }
 
-    public Availability canRemoveStudent(UUID id) {
-        return (mapStudents != null && !mapStudents.isEmpty() && mapStudents.get(id) != null) ?
-                Availability.unavailable("not student with id = " + id) : Availability.available();
+    public Availability canRemoveStudent() {
+        return (mapStudents != null && !mapStudents.isEmpty()) ?
+                Availability.available() : Availability.unavailable("students list is empty  ");
 
 
     }

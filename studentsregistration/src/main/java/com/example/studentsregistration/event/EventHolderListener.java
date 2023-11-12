@@ -1,5 +1,6 @@
 package com.example.studentsregistration.event;
 
+import com.example.studentsregistration.RegistrationStudents;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,6 @@ public class EventHolderListener {
 
     @EventListener
     public void listenRemove(EventRemove eventRemove){
-        System.out.println("student with id "+eventRemove.getId()+" was removed ");
+
     }
 }
