@@ -23,6 +23,7 @@ public class NewsCategory {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @ToString.Exclude
+    @Builder.Default
     private List<News> newsList = new ArrayList<>();
 
 

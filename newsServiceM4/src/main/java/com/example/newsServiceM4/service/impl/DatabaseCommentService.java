@@ -20,11 +20,13 @@ public class DatabaseCommentService implements CommentService {
     private final DatabaseCommentRepository commentRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserComment> findAll() {
         return commentRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserComment findById(Long id) {
         return commentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException
@@ -32,12 +34,14 @@ public class DatabaseCommentService implements CommentService {
     }
 
     @Override
+    @Transactional
     public UserComment save(UserComment userComment) {
         return commentRepository.save(userComment);
     }
 
     @Override
     @Loggable
+    @Transactional
     public UserComment update(UserComment userComment) {
         UserComment existedUserComment = findById(userComment.getId());
         BeanUtils.copyNonNullProperties(userComment, existedUserComment);

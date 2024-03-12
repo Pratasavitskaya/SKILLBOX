@@ -30,5 +30,8 @@ public class News {
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @ToString.Exclude
+    @Builder.Default
     private List<UserComment> userComments = new ArrayList<>();
+
+
 }

@@ -33,11 +33,13 @@ public class DatabaseNewsService implements NewsService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<News> findAll() {
         return newsRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public News findById(Long id) {
         return newsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -46,12 +48,14 @@ public class DatabaseNewsService implements NewsService {
     }
 
     @Override
+    @Transactional
     public News save(News news) {
         return newsRepository.save(news);
     }
 
     @Override
     @Loggable
+    @Transactional
     public News update(News news) {
 
         News existedNews = findById(news.getId());
@@ -69,6 +73,7 @@ public class DatabaseNewsService implements NewsService {
     }
 
     @Override
+    @Transactional
     public void deleteByIdIn(List<Long> ids) {
         newsRepository.deleteAllById(ids);
 

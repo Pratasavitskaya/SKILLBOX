@@ -77,6 +77,13 @@ public class NewsControllerV2 {
        throw new EntityNotFoundException("Удалять новость может только тот, кто ее создал!");
        // return ResponseEntity.badRequest().build();
     }
-
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> delete(@PathVariable Long id) {
+//
+//            databaseNewsService.deleteById(id);
+//
+//            return ResponseEntity.noContent().build();
+//
+//     }
 
 }
