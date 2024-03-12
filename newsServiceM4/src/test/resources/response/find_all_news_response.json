@@ -1,0 +1,26 @@
+{
+ "newsList": [
+  {
+   "id": 1,
+   "author": "Author 1",
+   "category": {
+    "id": 1,
+    "category": "category 1"
+   },
+   "newsText": "NewsText 1",
+   "title": "Title 1",
+   "numberOfComments": 0
+  },
+  {
+   "id": 2,
+   "author": "Author 2",
+   "category": {
+    "id": 2,
+    "category": "category 2"
+   },
+   "newsText": "NewsText 2",
+   "title": "Title 2",
+   "numberOfComments": 0
+  }
+ ]
+}

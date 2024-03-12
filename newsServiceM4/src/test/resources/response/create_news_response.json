@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "author": "Author 1",
+  "category": {
+    "id": 1,
+    "category": "category 1"
+  },
+  "newsText": "NewsText 1",
+  "title": "Title 1",
+  "comments": {
+    "userCommentsList": []
+  }
+}
